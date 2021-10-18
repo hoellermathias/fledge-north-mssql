@@ -79,18 +79,25 @@ _DEFAULT_CONFIG = {
         'order': '3',
         'displayName': 'DB NAME'
     },
+    'table': {
+        'description': 'Database Table',
+        'type': 'string',
+        'default': 'test',
+        'order': '4',
+        'displayName': 'DB TABLE'
+    },
     'user': {
         'description': 'Database User',
         'type': 'string',
         'default': 'test',
-        'order': '4',
+        'order': '5',
         'displayName': 'DB USER'
     },
     'pwd': {
         'description': 'Database Password',
         'type': 'string',
         'default': 'test',
-        'order': '5',
+        'order': '6',
         'displayName': 'DB PWD'
     },
     "source": {
@@ -98,21 +105,21 @@ _DEFAULT_CONFIG = {
          "type": "enumeration",
          "default": "readings",
          "options": [ "readings", "statistics" ],
-         'order': '6',
+         'order': '7',
          'displayName': 'Source'
     },
     "applyFilter": {
         "description": "Should filter be applied before processing data",
         "type": "boolean",
         "default": "false",
-        'order': '7',
+        'order': '8',
         'displayName': 'Apply Filter'
     },
     "filterRule": {
         "description": "JQ formatted filter to apply (only applicable if applyFilter is True)",
         "type": "string",
         "default": "[.[]]",
-        'order': '8',
+        'order': '9',
         'displayName': 'Filter Rule',
         "validity": "applyFilter == \"true\""
     }
@@ -160,8 +167,9 @@ class MssqlNorthPlugin(object):
     def __init__(self, config):
         self.event_loop = asyncio.get_event_loop()
         self.host = config['server']['value']
-        self.port = int(config['port']['value'])
+        self.port = config['port']['value']
         self.dbname = config['db']['value']
+        self.table = config['table']['value']
         self.user = config['user']['value']
         self.pwd = config['pwd']['value']
         self.dbconn = pymssql.connect(server=self.server, port=self.port, user=self.user, password=self.pwd, database=self.dbname)
@@ -204,10 +212,10 @@ class MssqlNorthPlugin(object):
         try:
             _LOGGER.debug('start sending')
             self.dbcursor.executemany(
-                    "INSERT INTO persons VALUES (%d, %s, %s)",
-                    [(1, p['asset'], p['timestamp'], json.dump(p['readings']))  for p in payload_block])
+                    f'INSERT INTO {self.table}(date, asset, content) VALUES (%s, %s, %s)',
+                    [(p['asset'], p['timestamp'], json.dump(p['readings']))  for p in payload_block])
             self.dbcursor.commit()
-
+            
             #if not self.client.is_connected:
             #	self.client.reconnect()
             _LOGGER.debug('finished sending')
