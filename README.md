@@ -7,7 +7,21 @@ Fledge North Plugin to store data into a MSSQL database. The data is stored in o
 
 1. Install MSSQL Python Client: ``pip install pymssql`` or run ``python3 -m pip install -r requirements.txt``
 2. copy ``mssql_north`` directory to ``FLEDGE_HOME_DIR/python/fledge/plugins/north/``
-3. Test the installation by sending a GET request to ``http://FLEDGE_HOME_URL/fledge/plugins/installed?type=north``. The response is a JSON listing all installed north plugins and should look like: ``{"plugins": [{"name": "mssql_north", "type": "north", "description": "MSSQL North Plugin", "version": "1.0", "installedDirectory": "north/mssql_north", "packageName": "fledge-north-mssql-north"}, ...]}``
+3. Test the installation by sending a GET request to ``http://FLEDGE_HOME_URL/fledge/plugins/installed?type=north``. The response is a JSON listing all installed north plugins and should look like: 
+```json 
+{
+    "plugins": [
+        {
+            "name": "mssql_north",
+            "type": "north",
+            "description": "MSSQL North Plugin",
+            "version": "1.0",
+            "installedDirectory": "north/mssql_north",
+            "packageName": "fledge-north-mssql-north"
+        },...
+    ]
+}
+```
 
 ### Database Setup
 
