@@ -166,7 +166,7 @@ class MssqlNorthPlugin(object):
 
     def __init__(self, config):
         self.event_loop = asyncio.get_event_loop()
-        self.host = config['server']['value']
+        self.server = config['server']['value']
         self.port = config['port']['value']
         self.dbname = config['db']['value']
         self.table = config['table']['value']
