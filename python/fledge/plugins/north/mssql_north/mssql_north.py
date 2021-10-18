@@ -45,17 +45,17 @@ __version__ = "${VERSION}"
 _LOGGER = logger.setup(__name__, level=logging.INFO)
 
 
-mqtt_north = None
+mssql_north = None
 config = ""
 
-_CONFIG_CATEGORY_NAME = "MQTT"
-_CONFIG_CATEGORY_DESCRIPTION = "MQTT North Plugin"
+_CONFIG_CATEGORY_NAME = "MSSQL"
+_CONFIG_CATEGORY_DESCRIPTION = "MSSQL North Plugin"
 
 _DEFAULT_CONFIG = {
     'plugin': {
-         'description': 'MQTT North Plugin',
+         'description': 'MSSQL North Plugin',
          'type': 'string',
-         'default': 'mqtt_north',
+         'default': 'mssql_north',
          'readonly': 'true'
     },
     'server': {
@@ -147,7 +147,7 @@ async def plugin_send(data, payload, stream_id):
 
 
 def plugin_shutdown(data):
-    _LOGGER.debug('shutdown mqtt north')
+    _LOGGER.debug('shutdown mssql north')
     mssql_north.shutdown() 
 
 
@@ -168,7 +168,7 @@ class MssqlNorthPlugin(object):
         self.config = config
         self.dbcursor = dbconn.curser()
         
-        #_LOGGER.exception("init mqtt north plugin")
+        #_LOGGER.exception("init mssql north plugin")
 
     def shutdown(self):
         self.dbconn.close()
