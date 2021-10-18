@@ -2,7 +2,7 @@
 fledge-north-mssql
 ==================
 
-Fledge North Plugin to store data into a MSSQL database. The data is stored in one table, one row per dataelement. The structure of the table has to be the following: ID | Date | Asset | Content. See Database Setup for the SQL statements to create the table.
+Fledge North Plugin to store data into a MSSQL database. The data is stored in one table, one row per reading. The structure of the table has to be the following: ID | Date | Asset | Content. See Database Setup for the SQL statements to create the table.
 
 Installation 
 -------------
