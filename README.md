@@ -5,9 +5,10 @@ Fledge North Plugin to store data into a MSSQL database. The data is stored in o
 
 ### Installation 
 
-1. Install MSSQL Python Client: ``pip install pymssql`` or run ``python3 -m pip install -r requirements.txt``
-2. copy ``mssql_north`` directory to ``FLEDGE_HOME_DIR/python/fledge/plugins/north/``
-3. Test the installation by sending a GET request to ``http://FLEDGE_HOME_URL/fledge/plugins/installed?type=north``. The response is a JSON listing all installed north plugins and should look like: 
+1. Install ODBC Driver + Headers: [Link to Installation Guide](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15)
+2. Install MSSQL Python Client: ``pip install pyodbc`` or run ``python3 -m pip install -r requirements.txt``
+3. copy ``mssql_north`` directory to ``FLEDGE_HOME_DIR/python/fledge/plugins/north/``
+4. Test the installation by sending a GET request to ``http://FLEDGE_HOME_URL/fledge/plugins/installed?type=north``. The response is a JSON listing all installed north plugins and should look like: 
 ```json 
 {
     "plugins": [
