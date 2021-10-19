@@ -13,7 +13,7 @@ import logging
 
 from fledge.common import logger
 from fledge.plugins.north.common.common import *
-import pymssql
+import pyodbc
 
 
 
@@ -172,7 +172,7 @@ class MssqlNorthPlugin(object):
         self.table = config['table']['value']
         self.user = config['user']['value']
         self.pwd = config['pwd']['value']
-        self.dbconn = pymssql.connect(server=self.server, port=self.port, user=self.user, password=self.pwd, database=self.dbname)
+        self.dbconn = pyodbc.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={self.server},{self.port};DATABASE={self.dbname};UID={self.user};PWD={self.pwd};')
         self.config = config
         self.dbcursor = dbconn.curser()
         
@@ -212,7 +212,7 @@ class MssqlNorthPlugin(object):
         try:
             _LOGGER.debug('start sending')
             self.dbcursor.executemany(
-                    f'INSERT INTO {self.table}(date, asset, content) VALUES (%s, %s, %s)',
+                    f'INSERT INTO {self.table}(date, asset, content) VALUES (?, ?, ?)',
                     [(p['asset'], p['timestamp'], json.dump(p['readings']))  for p in payload_block])
             self.dbcursor.commit()
             
