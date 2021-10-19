@@ -210,7 +210,8 @@ class MssqlNorthPlugin(object):
         """ send a list of block payloads"""
         num_count = 0
         try:
-            _LOGGER.debug(f'start sending {[(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block]}')
+            send_list = [(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block]
+            _LOGGER.debug(f'start sending {send_list}')
             self.dbcursor.executemany(
                     f'INSERT INTO {self.table}(date, asset, content) VALUES (?, ?, ?)',
                     [(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block])
