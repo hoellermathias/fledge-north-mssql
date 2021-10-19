@@ -42,7 +42,7 @@ conn.close()
 __license__ = "Apache 2.0"
 __version__ = "${VERSION}"
 
-_LOGGER = logger.setup(__name__, level=logging.INFO)
+_LOGGER = logger.setup(__name__, level=logging.DEBUG)
 
 
 mssql_north = None
@@ -210,7 +210,7 @@ class MssqlNorthPlugin(object):
         """ send a list of block payloads"""
         num_count = 0
         try:
-            _LOGGER.debug('start sending')
+            _LOGGER.debug(f'start sending {[(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block]}')
             self.dbcursor.executemany(
                     f'INSERT INTO {self.table}(date, asset, content) VALUES (?, ?, ?)',
                     [(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block])
