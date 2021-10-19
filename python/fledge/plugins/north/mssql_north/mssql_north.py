@@ -44,7 +44,7 @@ conn.close()
 __license__ = "Apache 2.0"
 __version__ = "${VERSION}"
 
-_LOGGER = logger.setup(__name__, level=logging.DEBUG)
+_LOGGER = logger.setup(__name__, level=logging.INFO)
 
 
 mssql_north = None
@@ -217,7 +217,7 @@ class MssqlNorthPlugin(object):
             self.dbcursor.executemany(
                     f'INSERT INTO {self.table}(asset, date, content) VALUES (%s, %s, %s)',
                     [(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block])
-            self.dbconn.commit()  
+            self.cdbconn.commit()  
             
             #if not self.client.is_connected:
             #	self.client.reconnect()
