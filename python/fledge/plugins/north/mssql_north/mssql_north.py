@@ -13,7 +13,8 @@ import logging
 
 from fledge.common import logger
 from fledge.plugins.north.common.common import *
-import pyodbc
+#import pyodbc
+import pymssql as mssqllib
 import datetime
 
 
@@ -173,7 +174,7 @@ class MssqlNorthPlugin(object):
         self.table = config['table']['value']
         self.user = config['user']['value']
         self.pwd = config['pwd']['value']
-        self.dbconn = pyodbc.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={self.server},{self.port};DATABASE={self.dbname};UID={self.user};PWD={self.pwd};')
+        self.dbconn = mssqllib.connect(server=self.server, port=self.port, user=self.user, password=self.pwd, database=self.dbname)#f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={self.server},{self.port};DATABASE={self.dbname};UID={self.user};PWD={self.pwd};')
         self.config = config
         self.dbcursor = self.dbconn.cursor()
         
