@@ -174,7 +174,7 @@ class MssqlNorthPlugin(object):
         self.pwd = config['pwd']['value']
         self.dbconn = pyodbc.connect(f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={self.server},{self.port};DATABASE={self.dbname};UID={self.user};PWD={self.pwd};')
         self.config = config
-        self.dbcursor = dbconn.curser()
+        self.dbcursor = self.dbconn.curser()
         
         #_LOGGER.exception("init mssql north plugin")
 
