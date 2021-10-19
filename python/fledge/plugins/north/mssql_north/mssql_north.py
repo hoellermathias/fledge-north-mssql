@@ -14,6 +14,7 @@ import logging
 from fledge.common import logger
 from fledge.plugins.north.common.common import *
 import pyodbc
+import datetime
 
 
 
@@ -214,7 +215,7 @@ class MssqlNorthPlugin(object):
             _LOGGER.debug(f'start sending {send_list}')
             self.dbcursor.executemany(
                     f'INSERT INTO {self.table}(date, asset, content) VALUES (?, ?, ?)',
-                    [(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block])
+                    [(p['asset'], datetime.datetime.strptime(p['timestamp'], "%Y-%m-%dT%H:%M:%S.%fZ"), json.dumps(p['readings']))  for p in payload_block])
             self.dbcursor.commit()
             
             #if not self.client.is_connected:
