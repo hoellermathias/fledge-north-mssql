@@ -216,8 +216,8 @@ class MssqlNorthPlugin(object):
             _LOGGER.debug(f'start sending {send_list}')
             self.dbcursor.executemany(
                     f'INSERT INTO {self.table}(asset, date, content) VALUES (%s, %s, %s)',
-                    [(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block])#datetime.datetime.strptime(,, "%Y-%m-%dT%H:%M:%S.%fZ")
-            self.dbcursor.commit()
+                    [(p['asset'], p['timestamp'], json.dumps(p['readings']))  for p in payload_block])
+            self.dbconn.commit()  
             
             #if not self.client.is_connected:
             #	self.client.reconnect()
